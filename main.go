@@ -1,31 +1,38 @@
 package main
 
 import (
-	"net/http"
 	"io"
 	"os"
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
+	"github.com/cavaliercoder/grab"
 )
 
 func main() {
 	const md5Original = "2f282b84e7e608d5852449ed940bfc51"
-	fileName := "100MB.zip"
-	out, _ := os.Create(fileName)
-	defer out.Close()
-	resp, _ := http.Get("http://90.130.70.73/100MB.zip")
-	defer resp.Body.Close()
-	println("Downloading file ...")
-	io.Copy(out, resp.Body)
+	url := "http://90.130.70.73/100MB.zip"
+	fmt.Printf("Downloading %s...\n", url)
+	resp, err := grab.Get(".", url)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error downloading %s: %v\n", url, err)
+		os.Exit(1)
+	}
 
-	md5, err := getMD5Hash(out)
+	fmt.Printf("File size %d \n", resp.Size)
+
+	file, _ := os.Open(resp.Filename)
+	defer file.Close()
+
+	md5, err := getMD5Hash(file)
 	println(md5)
 	if err == nil && md5 == md5Original {
 		println("Successfully Downloaded file ")
 	} else {
 		println("File corrupted")
 	}
-	os.Remove(fileName)
+
+	os.Remove(resp.Filename)
 }
 
 func getMD5Hash(file *os.File) (string, error) {

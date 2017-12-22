@@ -6,5 +6,6 @@ applications:
   buildpack: https://github.com/cloudfoundry/go-buildpack.git
   stack: cflinuxfs2
   timeout: 360
+  health-check-type: none
   env:
         GOPACKAGENAME: main
