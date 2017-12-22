@@ -15,6 +15,7 @@ func main() {
 	defer out.Close()
 	resp, _ := http.Get("http://90.130.70.73/100MB.zip")
 	defer resp.Body.Close()
+	println("Downloading file ...")
 	io.Copy(out, resp.Body)
 
 	md5, err := getMD5Hash(out)
