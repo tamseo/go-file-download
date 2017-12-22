@@ -8,4 +8,4 @@ applications:
   timeout: 360
   health-check-type: none
   env:
-        GOPACKAGENAME: main
+    GOPACKAGENAME: main
