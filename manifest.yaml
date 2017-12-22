@@ -1,0 +1,8 @@
+applications:
+- name: go-file-download
+  memory: 512M
+  disk_quota: 2048M
+  instances: 5
+  buildpack: https://github.com/cloudfoundry/go-buildpack.git
+  stack: cflinuxfs2
+  timeout: 360
