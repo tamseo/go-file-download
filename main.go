@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	const md5Original = "2f282b84e7e608d5852449ed940bfc51"
+	const md5Original = "cd573cfaace07e7949bc0c46028904ff"
 	url := "http://90.130.70.73/1GB.zip"
 	fmt.Printf("Downloading %s...\n", url)
 	resp, err := grab.Get(".", url)
